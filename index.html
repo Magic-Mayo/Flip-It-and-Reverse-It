@@ -22,11 +22,20 @@
             font-family: Verdana, Geneva, Tahoma, sans-serif;
         }
 
+        /* nav {
+            background: #2C363F;
+            position: fixed;
+            top: 0;
+            height: 6rem;
+            width: 100%;
+        } */
+
         .content-container {
             height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            margin-top: 4vh;
         }
 
         .svg-waves-top {
@@ -41,17 +50,23 @@
             top: 50%;
         }
 
-        .title, .title span {
+        .title {
             font-size: 5rem;
             text-align: center;
         }
 
+        .input-section {
+            position: relative;
+        }
+
         .input-section-title {
             width: 100%;
+            font-style: italic;
         }
 
         .reverse-form {
-            margin-top: 8rem;
+            /* position: absolute; */
+            margin-top: 5rem;
             width: 100%;
             display: flex;
             flex-direction: column;
@@ -62,6 +77,8 @@
         .reverse-form-label {
             margin-bottom: 1rem;
             font-size: 2rem;
+            width: 40vw;
+            text-align: center;
         }
         
         textarea {
@@ -104,13 +121,15 @@
             color: #191919;
         }
 
-        button:hover {
+        button:focus {
             cursor: pointer;
+            /* outline: none; */
         }
 
         .input-error {
             color: #ff0000;
-            position: absolute;
+            margin: 2rem 0;
+            /* position: absolute; */
         }
 
         .output-section-title {
@@ -118,8 +137,13 @@
         }
 
         .output-section-title p {
-            font-size: 3rem;
+            font-size: 5rem;
             display: inline-block;
+        }
+
+        #output-flip, #output-reverse {
+            font-style: italic;
+            font-weight: 600;
         }
 
         .output-string {
@@ -131,6 +155,7 @@
             display: inline-block;
             color: #F2F2F2;
             word-wrap: normal;
+            margin: 2rem 0;
         }
 
         @keyframes reverse-animation {
@@ -141,13 +166,32 @@
             100% {transform: rotateX(360deg);}
         }
 
+        @keyframes shake-animation {
+            10%, 90% {transform: translate3d(-1px, 0, 0)}
+            20%, 80% {transform: translate3d(2px, 0, 0)}
+            30%, 50%, 70% {transform: translate3d(-4px, 0, 0)}
+            40%, 60% {transform: translate3d(4px, 0, 0)}
+        }
+
+        @keyframes fade-out {
+            100% {opacity: 0;}
+        }
+
         .flip {
             animation: flip-animation 1s 1 ease-out;
         }
 
         .reverse {
             animation: reverse-animation 1s 1 ease-out;
-        }        
+        }
+
+        .string-clear {
+            animation: fade-out 1s 1 ease-out;
+        }
+
+        .error {
+            animation: shake-animation .5s 1 linear;
+        }
 
     </style>
 
@@ -190,7 +234,7 @@
                 placeholder="Word/Phrase to Reverse..."
                 onkeyup="input()"
                 autofocus></textarea>
-                <span class="input-error"></span>
+                <span class="input-error">&nbsp;</span>
                 
                 <div class="button-container">
                     <button type="submit" class="form-reverse-button">Reverse!</button>
@@ -205,11 +249,11 @@
         <section class="output-section">
 
             <div class="output-section-title title">
-                <p>and I'll </p>
-                <p id="output-flip">flip </p>
-                <p>it and </p>
-                <p id="output-reverse">reverse </p>
-                <p>it!</p>
+                <p>and I'll</p>
+                <p id="output-flip">flip</p>
+                <p>it and</p>
+                <p id="output-reverse">reverse</p>
+                <p>it below!</p>
             </div>
 
             <div class="output-string">
@@ -230,18 +274,20 @@
             const output = document.querySelector("#output");
             const error = document.querySelector(".input-error");
 
-            // Checks to make sure input length is valid.  If not returns an error message
+            // Checks to make sure input length is valid.  If not, returns an error message
             if(checkInput() === true){
-                error.innerHTML = ''
+                error.innerHTML = "&nbsp;"
             }
             
             else {
                 error.innerHTML = checkInput()
             }
             
+            // Output typed string from input to output area as user types
             output.innerHTML = stringToReverse.value.trim()
         }
 
+        // Function to check if input is valid
         checkInput = () => {
             // Input form variable
             const stringToCheck = document.querySelector("#input-to-reverse")
@@ -265,6 +311,7 @@
         const reverseString = () => {
 
             // Variables for output field, "flip" and "reverse" in output title, reverse button, and error span
+            const stringToReverse = document.querySelector("#input-to-reverse");
             const output = document.querySelector("#output");
             const flip = document.querySelector("#output-flip");
             const reverse = document.querySelector("#output-reverse");
@@ -298,18 +345,38 @@
             }
 
             else {
+                // Sets error and shakes input area to alert user of error
+                stringToReverse.classList.add("error");
+                setTimeout(() => {
+                    stringToReverse.classList.remove("error")
+                }, 1000);
                 error.innerHTML = checkInput();
             }
         }
 
         const clearFields = () => {
+            // Variables for output area, input error, and form
             const error = document.querySelector(".input-error");
             const output = document.querySelector("#output");
             let reverseForm = document.querySelector("#input-to-reverse");
 
-            error.innerHTML = "";
-            reverseForm.value = "";
-            output.innerHTML = "";
+            // Adds reverse class to do a 3d transform on the form input and then clear the form as it's rotating
+            reverseForm.classList.add("reverse");
+            output.classList.add("string-clear")
+            setTimeout(() => {
+                reverseForm.value = "";
+            }, 450);
+            // setTimeout(() => {
+            // }, 245);
+
+            setTimeout(() => {
+                output.innerHTML = "";
+                output.classList.remove("string-clear")
+                reverseForm.classList.remove("reverse");
+            }, 950);
+
+            // Clears out error(if it exists) and output string
+            error.innerHTML = "&nbsp;";
         }
 
     </script>
