@@ -26,6 +26,54 @@
             font-family: 'Snippet', sans-serif;
         }
 
+        aside {
+            height: 5rem;
+            width: 100%;
+        }
+
+        aside span {
+            position: fixed;
+            top: 3rem;
+            height: .5rem;
+            width: 4rem;
+            border-radius: .5rem;
+            background-color: #191919;
+        }
+
+        aside span:nth-child(2) {
+            top: 4rem;
+        }
+
+        aside span:last-child {
+            top: 5rem;
+        }
+
+        .menu {
+            background-color: #2C363F;
+            color: #F2F2F2;
+            position: fixed;
+            right: 0;
+            width: 25vw;
+            height: 100vh;
+            right: 3rem;
+        }
+
+        .menu p {
+            font-size: 1.5rem;
+            padding: 2rem 1.5rem;
+        }
+
+        .menu-button {
+            position: fixed;
+            height: 5rem;
+            width: 5rem;
+            right: 3rem;
+        }
+
+        .menu-button:hover {
+            cursor: pointer;
+        }
+
         .content-container {
             height: 100vh;
             display: flex;
@@ -100,7 +148,7 @@
         }
 
         .button-container {
-            margin: 4rem 0 2rem;
+            /* margin: 4rem 0 2rem; */
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -172,6 +220,10 @@
             width: 40vw;
         }
 
+        .hide {
+            display: none;
+        }
+
         @keyframes reverse-animation {
             100% {transform: rotateY(360deg);}
         }
@@ -191,6 +243,16 @@
             100% {opacity: 0;}
         }
 
+        @keyframes expand {
+            0% {width: 0}
+            100% {width: 25vw}
+        }
+
+        @keyframes collapse {
+            0% {width: 25vw;}
+            100% {width: 0;}
+        }
+
         .flip {
             animation: flip-animation 1s 1 ease-out;
         }
@@ -207,10 +269,18 @@
             animation: shake-animation .5s 1 linear;
         }
 
+        .expand {
+            animation: expand .8s 1 ease-in;
+        }
+
+        .collapse {
+            animation: collapse .8s 1 ease-out;
+        }
+
     </style>
 
 </head>
-<body>
+<body onclick="toggleMenu(event)">
     
     <!-- When I found this SVG path on getwaves.io it reminded me of waveforms a bit.  Waveforms, in a sense, can represent reversal -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="svg-waves-top">
@@ -225,9 +295,34 @@
         fill-opacity="1"
         d="M0,256L60,245.3C120,235,240,213,360,224C480,235,600,277,720,261.3C840,245,960,171,1080,154.7C1200,139,1320,181,1380,202.7L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">    </path>
     </svg>
-    <nav>
 
-    </nav>
+    <aside>
+        <div class="menu-button menu-hidden">
+            <span class="menu-hidden"></span>
+            <span class="menu-hidden"></span>
+            <span class="menu-hidden"></span>
+        </div>
+
+        <div class="menu hide">
+            <p>
+                I got the inspiration for this project as soon as I got the requirements for it.  
+                For whatever reason, I immediately thought of the Missy Elliott song "Work It."  
+                Once I had that in mind I started thinking of ways to incorporate "flip" and "reverse" 
+                into the theme.
+            </p>
+            <p>
+                I then found a pretty cool "wave generator" on getwaves.io and once I added them to the page 
+                in the orientation I chose it reminded me of waveforms.  From there I searched sine, 
+                as in a sine waveform, for the font and ended up with "Snippet" from Google Fonts.  
+            </p>
+            <p>
+                Finally, I searched "reverse" on coolors.co and found the color scheme I ended up going with.  
+                All in all, I believe this page, although simple in style and appearance, turned out well.  If 
+                you have any input on how to make this better use the link below to leave me a comment!
+            </p>
+        </div>
+    </aside>
+
     <main class="content-container">
 
         <!-- Got my inspiration from Missy Elliott's song Work It ;) -->
@@ -421,6 +516,32 @@
 
             else if (!error.innerHTML && input.value.length > 0 && input.value.length < 101){
                 return error.innerHTML = "Reverse again or reset to enter new text!"
+            }
+        }
+
+        toggleMenu = e => {
+            // Variable for menu button
+            const menu = document.querySelector(".menu");
+
+            console.log(!e.target.classList.contains("menu-button"), !e.target.classList.contains("menu"))
+            if(e.target.classList.contains("menu-hidden")){
+                // Show menu and add css class for animation to expand menu
+                menu.classList.remove("hide");
+                menu.classList.add("expand");
+
+                setTimeout(() => {
+                    menu.classList.remove("expand");
+                }, 800)
+                console.log("menu")
+            }
+
+            if(!e.target.classList.contains("menu-hidden") && !e.target.classList.contains("menu")){
+                console.log("body")
+                menu.classList.add("collapse");
+                setTimeout(() => {
+                    menu.classList.add("hide");
+                    menu.classList.remove("collapse")
+                }, 795)
             }
         }
 
