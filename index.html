@@ -497,7 +497,9 @@
 
             // Disables textarea when reverse is selected so user cannot add more text once it's reversed
             if(textarea.disabled){
-                return textarea.disabled = false;
+                setTimeout(() => {
+                    return textarea.disabled = false;
+                }, 2000)
             }
             // Enables textarea when reverse button is clicked a second time so user can add more text before resetting if desired
             else if (!textarea.disabled && textarea.value.length > 4 && textarea.value.length < 101){
@@ -510,38 +512,13 @@
             const input = document.querySelector("#input-to-reverse");
             const error = document.querySelector(".input-error");
 
+            // Sets warning once reverse button is clicked to let user know they need to reset or reverse again before adding new text
             if(error.innerHTML){
                 return error.innerHTML = ""
             }
 
             else if (!error.innerHTML && input.value.length > 0 && input.value.length < 101){
                 return error.innerHTML = "Reverse again or reset to enter new text!"
-            }
-        }
-
-        toggleMenu = e => {
-            // Variable for menu button
-            const menu = document.querySelector(".menu");
-
-            console.log(!e.target.classList.contains("menu-button"), !e.target.classList.contains("menu"))
-            if(e.target.classList.contains("menu-hidden")){
-                // Show menu and add css class for animation to expand menu
-                menu.classList.remove("hide");
-                menu.classList.add("expand");
-
-                setTimeout(() => {
-                    menu.classList.remove("expand");
-                }, 800)
-                console.log("menu")
-            }
-
-            if(!e.target.classList.contains("menu-hidden") && !e.target.classList.contains("menu")){
-                console.log("body")
-                menu.classList.add("collapse");
-                setTimeout(() => {
-                    menu.classList.add("hide");
-                    menu.classList.remove("collapse")
-                }, 795)
             }
         }
 
