@@ -237,7 +237,7 @@
                 onkeyup="input()"
                 autofocus></textarea>
 
-                <span class="input-error">Pssst: Spaces count toward the total!</span>
+                <span class="input-error"></span>
                 
                 <div class="button-container">
                     <button type="submit" class="form-reverse-button">Reverse!</button>
@@ -295,7 +295,7 @@
             checkInput();
 
             // Output typed string from textarea to output field as user types
-            output.innerHTML = stringToReverse.value.trim()
+            output.innerHTML = stringToReverse.value.trim();
         }
 
         // Function to check if input is valid
@@ -305,17 +305,26 @@
             const stringToCheck = document.querySelector("#input-to-reverse");
             const error = document.querySelector(".input-error");
 
-            // Checks length of string against set parameters and returns error if one exists
-            if(stringToCheck.value.length > 100) {
-                return error.innerHTML = `Word or phrase to reverse is too long!  Please remove ${stringToCheck.value.length - 100} characters and try again!`
+            // Checks length of string against set parameters and checks for spaces at beginning or end.  Returns error if one exists
+            if(stringToCheck.value.split("").shift() === " " || stringToCheck.value.split("").pop() === " " && stringToCheck.value.trim().length < 6){
+
+                stringToCheck.classList.add("error");
+                setTimeout(() => {
+                    stringToCheck.classList.remove("error");
+                }, 1000);
+                return error.innerHTML = "The space(s) at the beginning and end don't count!";
+            }
+
+            else if(stringToCheck.value.length > 100) {
+                return error.innerHTML = `Word or phrase to reverse is too long!  Please remove ${stringToCheck.value.length - 100} characters and try again!`;
             }
             
-            else if (stringToCheck.value.length < 5) {
-                return error.innerHTML = `Word or phrase to reverse is too short!  Please add ${5 - stringToCheck.value.length} characters and try again!`
+            else if(stringToCheck.value.length <= 4) {
+                return error.innerHTML = `Word or phrase to reverse is too short!  Please add ${5 - stringToCheck.value.length} characters and try again!`;
             }
 
             // If string length is valid remove error
-            else return error.innerHTML = ""
+            else return error.innerHTML = "";
         }
 
         // Takes value from output field with id of "output" and reverses the string
@@ -331,8 +340,9 @@
             // Either disables or enables textarea
             toggleTextarea();
 
+
             // Checks string length to ensure it meets requirements before reversing
-            if (stringToReverse.value.length < 101 && stringToReverse.value.length > 4) {
+            if (stringToReverse.value.length < 101 && stringToReverse.value.trim().length > 4) {
             
                 // Adding class for animations
                 output.classList.add("flip");
@@ -360,10 +370,10 @@
 
             else {
                 // Sets error and shakes input area to alert user of error
-                stringToReverse.classList.add("error");
                 error.innerHTML = checkInput();
+                stringToReverse.classList.add("error");
                 setTimeout(() => {
-                    stringToReverse.classList.remove("error")
+                    stringToReverse.classList.remove("error");
                 }, 1000);
             }
         }
@@ -378,7 +388,7 @@
             // Adds reverse class to do a 3d transform on the form input and then clear the form as it's rotating
             // Adds string-clear class to fade out output when cleared
             reverseForm.classList.add("reverse");
-            output.classList.add("string-clear")
+            output.classList.add("string-clear");
 
             setTimeout(() => {
                 reverseForm.value = "";
@@ -387,12 +397,12 @@
             // Clears output after text fades and removes css classes 
             setTimeout(() => {
                 output.innerHTML = "";
-                output.classList.remove("string-clear")
+                output.classList.remove("string-clear");
                 reverseForm.classList.remove("reverse");
             }, 950);
 
             // Clears out error(if it exists)
-            error.innerHTML = "Pssst: Spaces count toward the total!";
+            error.innerHTML = "";
 
             // Enables textarea input
             reverseForm.disabled = false;
@@ -421,11 +431,11 @@
 
             // Sets warning once reverse button is clicked to let user know they need to reset or reverse again before adding new text
             if(error.innerHTML){
-                return error.innerHTML = "Pssst: Spaces count toward the total!"
+                return error.innerHTML = "";
             }
 
             else if (!error.innerHTML && input.value.length > 0 && input.value.length < 101){
-                return error.innerHTML = "Reverse again or reset to enter new text!"
+                return error.innerHTML = "Reverse again or reset to enter new text!";
             }
         }
 
