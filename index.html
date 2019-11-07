@@ -4,31 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="icon" href="./reverse.svg">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao&display=swap">
     <title>Reverse It!</title>
 
     <!-- Styling starts here -->
-
+    <!-- I chose the color scheme randomly from coolors.co by searching reverse.  I found one that I thought worked well and ran with it -->
     <style>
         * {
             font-size: 10px;
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         }
 
         body {
             background-color: #6F247E;
             color: #191919;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            height: 100vh;
+            font-family: 'Liu Jian Mao Cao', cursive;
         }
-
-        /* nav {
-            background: #2C363F;
-            position: fixed;
-            top: 0;
-            height: 6rem;
-            width: 100%;
-        } */
 
         .content-container {
             height: 100vh;
@@ -40,14 +36,14 @@
 
         .svg-waves-top {
             position: fixed;
-            bottom: 50%;
+            bottom: 60%;
             z-index: -1;
         }
         
         .svg-waves-bottom {
             z-index: -1;
             position: fixed;
-            top: 50%;
+            top: 40%;
         }
 
         .title {
@@ -65,7 +61,6 @@
         }
 
         .reverse-form {
-            /* position: absolute; */
             margin-top: 5rem;
             width: 100%;
             display: flex;
@@ -84,17 +79,19 @@
         textarea {
             resize: none;
             width: 40vw;
-            height: 30vh;
+            height: 20vh;
             border-radius: .5rem;
             position: relative;
             font-size: 2rem;
             border: none;
             box-shadow: #191919 .5rem 2rem 2rem;
-            padding: 0 .5rem;
+            padding: .5rem;
+            overflow: hidden;
         }
 
         ::placeholder {
             font-size: 2rem;
+            opacity: .75;
         }
 
         #input-to-reverse {
@@ -104,12 +101,15 @@
 
         .button-container {
             margin: 4rem 0 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
         }
 
         button {
             background-color: #6F247E;
             border-radius: .75rem;
-            border: none;
             padding: .75rem;
             box-shadow: #191919 .4rem 1rem 1rem;
             width: 16rem;
@@ -117,23 +117,33 @@
             font-size: 3rem;
             line-height: 2.5rem;
             font-weight: 600;
-            margin: 0 3rem;
+            margin: 3rem;
             color: #191919;
+            border: #191919 .1rem solid;
+        }
+
+        button:hover {
+            cursor: pointer;
         }
 
         button:focus {
             cursor: pointer;
-            /* outline: none; */
+            outline: none;
         }
 
         .input-error {
-            color: #ff0000;
-            margin: 2rem 0;
-            /* position: absolute; */
+            color: #ff0000a9;
+            text-align: center;
+            margin: 3rem 0;
+            font-size: 2rem;
+            text-shadow: #2C363F 0.1rem .1rem;
+            font-style: italic;
+            font-weight: 600;
+            width: 40vw;
         }
 
         .output-section-title {
-            margin-top: 1rem;
+            margin-top: 2rem;
         }
 
         .output-section-title p {
@@ -151,11 +161,12 @@
         }
 
         #output {
-            font-size: 1.8rem;
+            font-size: 4rem;
             display: inline-block;
             color: #F2F2F2;
-            word-wrap: normal;
-            margin: 2rem 0;
+            word-wrap: break-word;
+            margin: 4rem 0 0;
+            width: 40vw;
         }
 
         @keyframes reverse-animation {
@@ -167,10 +178,10 @@
         }
 
         @keyframes shake-animation {
-            10%, 90% {transform: translate3d(-1px, 0, 0)}
-            20%, 80% {transform: translate3d(2px, 0, 0)}
-            30%, 50%, 70% {transform: translate3d(-4px, 0, 0)}
-            40%, 60% {transform: translate3d(4px, 0, 0)}
+            10%, 90% {transform: translate3d(-2px, 0, 0)}
+            20%, 80% {transform: translate3d(3px, 0, 0)}
+            30%, 50%, 70% {transform: translate3d(-6px, 0, 0)}
+            40%, 60% {transform: translate3d(6px, 0, 0)}
         }
 
         @keyframes fade-out {
@@ -198,42 +209,45 @@
 </head>
 <body>
     
+    <!-- When I found this SVG path on getwaves.io it reminded me of sine waves a bit.  Sine waves, in a sense, represent reversal -->
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="svg-waves-top">
         <path
         fill="#00cecb"
         fill-opacity="1"
-        d="M0,96L40,117.3C80,139,160,181,240,176C320,171,400,117,480,101.3C560,85,640,107,720,106.7C800,107,880,85,960,112C1040,139,1120,213,1200,224C1280,235,1360,181,1400,154.7L1440,128L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
-        </path>
+        d="M0,256L60,245.3C120,235,240,213,360,224C480,235,600,277,720,261.3C840,245,960,171,1080,154.7C1200,139,1320,181,1380,202.7L1440,224L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">        </path>
     </svg>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="svg-waves-bottom">
         <path
         fill="#00CECB"
         fill-opacity="1"
-        d="M0,96L40,117.3C80,139,160,181,240,176C320,171,400,117,480,101.3C560,85,640,107,720,106.7C800,107,880,85,960,112C1040,139,1120,213,1200,224C1280,235,1360,181,1400,154.7L1440,128L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z">
-    </path>
+        d="M0,256L60,245.3C120,235,240,213,360,224C480,235,600,277,720,261.3C840,245,960,171,1080,154.7C1200,139,1320,181,1380,202.7L1440,224L1440,0L1380,0C1320,0,1200,0,1080,0C960,0,840,0,720,0C600,0,480,0,360,0C240,0,120,0,60,0L0,0Z">    </path>
     </svg>
     <nav>
 
     </nav>
     <main class="content-container">
+
+        <!-- Got my inspiration from Missy Elliott's song Work It ;) -->
         <h1 class="input-section-title title">Put ya thang down...</h1>
     
         <section class="input-section">
 
 
-            <form class="reverse-form" onsubmit="event.preventDefault(); reverseString()">
+            <form class="reverse-form" onsubmit="event.preventDefault(); checkTextarea(); reverseString();">
 
                 <label for="reverse" class="reverse-form-label">
-                    Type a word or phrase below, using 5 to 100 characters, to be reversed!
+                    Type a word or phrase below, using 5 to 100 characters, to be flipped and reversed!
                 </label>
                 
                 <textarea
                 type="text"
                 name="reverse"
                 id="input-to-reverse"
-                placeholder="Word/Phrase to Reverse..."
+                placeholder="Type here to reverse..."
                 onkeyup="input()"
                 autofocus></textarea>
+
+                <!-- Set to non-breaking space so span will "take up space" and help with margins -->
                 <span class="input-error">&nbsp;</span>
                 
                 <div class="button-container">
@@ -249,7 +263,7 @@
         <section class="output-section">
 
             <div class="output-section-title title">
-                <p>and I'll</p>
+                <p>...and I'll</p>
                 <p id="output-flip">flip</p>
                 <p>it and</p>
                 <p id="output-reverse">reverse</p>
@@ -269,56 +283,52 @@
 
         // Gets value from input field with id of "input-to-reverse" and outputs to the field with an id of "output"
         const input = () => {
-            // Input form and output field variables
+            // Textarea and output field variables
             const stringToReverse = document.querySelector("#input-to-reverse");
             const output = document.querySelector("#output");
-            const error = document.querySelector(".input-error");
 
-            // Checks to make sure input length is valid.  If not, returns an error message
-            if(checkInput() === true){
-                error.innerHTML = "&nbsp;"
-            }
-            
-            else {
-                error.innerHTML = checkInput()
-            }
-            
+            // Checks if error is present and if function does not return a non-breaking space it will alert the user that an error exists
+            checkInput();
+
             // Output typed string from input to output area as user types
             output.innerHTML = stringToReverse.value.trim()
         }
 
         // Function to check if input is valid
         checkInput = () => {
-            // Input form variable
-            const stringToCheck = document.querySelector("#input-to-reverse")
 
-            // Checks length of string against set parameters
+            // Textarea and error field variables
+            const stringToCheck = document.querySelector("#input-to-reverse");
+            const error = document.querySelector(".input-error");
+
+            // Checks length of string against set parameters and returns error if one exists
             if(stringToCheck.value.length > 100) {
-                console.log('long')
-                return `String to reverse is too long!  Please remove ${stringToCheck.value.length - 100} characters and try again!`
+                return error.innerHTML = `Word or phrase to reverse is too long!  Please remove ${stringToCheck.value.length - 100} characters and try again!`
             }
             
             else if (stringToCheck.value.length < 5) {
-                console.log('short')
-                return `String to reverse is too short!  Please add ${5 - stringToCheck.value.length} characters or more and try again!`
+                return error.innerHTML = `Word or phrase to reverse is too short!  Please add ${5 - stringToCheck.value.length} characters and try again!`
             }
 
             // If string length is valid return true
-            else return true
+            else return error.innerHTML = "&nbsp;"
         }
 
         // Takes value from output field with id of "output" and reverses the string
         const reverseString = () => {
 
-            // Variables for output field, "flip" and "reverse" in output title, reverse button, and error span
+            // Variables for output field, "flip" and "reverse" in output title, textarea, and error field
             const stringToReverse = document.querySelector("#input-to-reverse");
             const output = document.querySelector("#output");
             const flip = document.querySelector("#output-flip");
             const reverse = document.querySelector("#output-reverse");
             const error = document.querySelector(".input-error");
 
-            console.log(checkInput())
-            if (checkInput() === true) {
+            // Either disables or enables textarea
+            toggleTextarea();
+
+            // Checks string length to ensure it meets requirements before reversing
+            if (stringToReverse.value.length < 101 && stringToReverse.value.length > 4) {
             
                 // Adding class for animations
                 output.classList.add("flip");
@@ -347,38 +357,72 @@
             else {
                 // Sets error and shakes input area to alert user of error
                 stringToReverse.classList.add("error");
+                error.innerHTML = checkInput();
                 setTimeout(() => {
                     stringToReverse.classList.remove("error")
                 }, 1000);
-                error.innerHTML = checkInput();
             }
         }
 
         const clearFields = () => {
+
             // Variables for output area, input error, and form
             const error = document.querySelector(".input-error");
             const output = document.querySelector("#output");
             let reverseForm = document.querySelector("#input-to-reverse");
 
             // Adds reverse class to do a 3d transform on the form input and then clear the form as it's rotating
+            // Adds string-clear class to fade out output when cleared
             reverseForm.classList.add("reverse");
             output.classList.add("string-clear")
+
             setTimeout(() => {
                 reverseForm.value = "";
             }, 450);
-            // setTimeout(() => {
-            // }, 245);
 
+            // Clears output after text fades and removes css classes 
             setTimeout(() => {
                 output.innerHTML = "";
                 output.classList.remove("string-clear")
                 reverseForm.classList.remove("reverse");
             }, 950);
 
-            // Clears out error(if it exists) and output string
+            // Clears out error(if it exists)
             error.innerHTML = "&nbsp;";
+
+            // Enables textarea input
+            reverseForm.disabled = false;
+        }
+
+        const toggleTextarea = () => {
+            // Variable for textarea
+            const textarea = document.querySelector("#input-to-reverse");
+
+            // Disables textarea when reverse is selected so user cannot add more text once it's reversed
+            if(textarea.disabled){
+                return textarea.disabled = false;
+            }
+            // Enables textarea when reverse button is clicked a second time so user can add more text before resetting if desired
+            else if (!textarea.disabled && textarea.value.length > 4 && textarea.value.length < 101){
+                return textarea.disabled = true;
+            }
+        }
+
+        const checkTextarea = () => {
+            // Variables for textarea and error field
+            const input = document.querySelector("#input-to-reverse");
+            const error = document.querySelector(".input-error");
+
+            if(error.innerHTML === "Reverse again or reset to enter new text!"){
+                return error.innerHTML = "&nbsp;"
+            }
+
+            else if (error.innerHTML === "&nbsp;" && input.value.length > 0 && input.value.length < 101){
+                return error.innerHTML = "Reverse again or reset to enter new text!"
+            }
         }
 
     </script>
+
 </body>
 </html>
