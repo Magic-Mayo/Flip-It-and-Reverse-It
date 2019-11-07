@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reverse It!</title>
+
+    <!-- Styling starts here -->
+
+    <style>
+        * {
+            font-size: 10px;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #6F247E;
+            color: #191919;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        .content-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .svg-waves-top {
+            position: fixed;
+            bottom: 50%;
+            z-index: -1;
+        }
+        
+        .svg-waves-bottom {
+            z-index: -1;
+            position: fixed;
+            top: 50%;
+        }
+
+        .title, .title span {
+            font-size: 5rem;
+            text-align: center;
+        }
+
+        .input-section-title {
+            width: 100%;
+        }
+
+        .reverse-form {
+            margin-top: 8rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .reverse-form-label {
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        textarea {
+            resize: none;
+            width: 40vw;
+            height: 30vh;
+            border-radius: .5rem;
+            position: relative;
+            font-size: 2rem;
+            border: none;
+            box-shadow: #191919 .5rem 2rem 2rem;
+            padding: 0 .5rem;
+        }
+
+        ::placeholder {
+            font-size: 2rem;
+        }
+
+        #input-to-reverse {
+            background-color: #F2F2F2;
+            color: #2C363F;
+        }
+
+        .button-container {
+            margin: 4rem 0 2rem;
+        }
+
+        button {
+            background-color: #6F247E;
+            border-radius: .75rem;
+            border: none;
+            padding: .75rem;
+            box-shadow: #191919 .4rem 1rem 1rem;
+            width: 16rem;
+            height: 4rem;
+            font-size: 3rem;
+            line-height: 2.5rem;
+            font-weight: 600;
+            margin: 0 3rem;
+            color: #191919;
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+
+        .input-error {
+            color: #ff0000;
+            position: absolute;
+        }
+
+        .output-section-title {
+            margin-top: 1rem;
+        }
+
+        .output-section-title p {
+            font-size: 3rem;
+            display: inline-block;
+        }
+
+        .output-string {
+            text-align: center;
+        }
+
+        #output {
+            font-size: 1.8rem;
+            display: inline-block;
+            color: #F2F2F2;
+            word-wrap: normal;
+        }
+
+        @keyframes reverse-animation {
+            100% {transform: rotateY(360deg);}
+        }
+
+        @keyframes flip-animation {
+            100% {transform: rotateX(360deg);}
+        }
+
+        .flip {
+            animation: flip-animation 1s 1 ease-out;
+        }
+
+        .reverse {
+            animation: reverse-animation 1s 1 ease-out;
+        }        
+
+    </style>
+
+</head>
+<body>
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="svg-waves-top">
+        <path
+        fill="#00cecb"
+        fill-opacity="1"
+        d="M0,96L40,117.3C80,139,160,181,240,176C320,171,400,117,480,101.3C560,85,640,107,720,106.7C800,107,880,85,960,112C1040,139,1120,213,1200,224C1280,235,1360,181,1400,154.7L1440,128L1440,320L1400,320C1360,320,1280,320,1200,320C1120,320,1040,320,960,320C880,320,800,320,720,320C640,320,560,320,480,320C400,320,320,320,240,320C160,320,80,320,40,320L0,320Z">
+        </path>
+    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" class="svg-waves-bottom">
+        <path
+        fill="#00CECB"
+        fill-opacity="1"
+        d="M0,96L40,117.3C80,139,160,181,240,176C320,171,400,117,480,101.3C560,85,640,107,720,106.7C800,107,880,85,960,112C1040,139,1120,213,1200,224C1280,235,1360,181,1400,154.7L1440,128L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z">
+    </path>
+    </svg>
+    <nav>
+
+    </nav>
+    <main class="content-container">
+        <h1 class="input-section-title title">Put ya thang down...</h1>
+    
+        <section class="input-section">
+
+
+            <form class="reverse-form" onsubmit="event.preventDefault(); reverseString()">
+
+                <label for="reverse" class="reverse-form-label">
+                    Type a word or phrase below, using 5 to 100 characters, to be reversed!
+                </label>
+                
+                <textarea
+                type="text"
+                name="reverse"
+                id="input-to-reverse"
+                placeholder="Word/Phrase to Reverse..."
+                onkeyup="input()"
+                autofocus></textarea>
+                <span class="input-error"></span>
+                
+                <div class="button-container">
+                    <button type="submit" class="form-reverse-button">Reverse!</button>
+                    <button type="button" class="form-reset-button" onclick="clearFields()">Reset!</button>
+                </div>
+
+            </form>
+                
+
+        </section>
+
+        <section class="output-section">
+
+            <div class="output-section-title title">
+                <p>and I'll </p>
+                <p id="output-flip">flip </p>
+                <p>it and </p>
+                <p id="output-reverse">reverse </p>
+                <p>it!</p>
+            </div>
+
+            <div class="output-string">
+                <p id="output"></p>
+            </div>
+
+        </section>
+    </main>
+    
+    <!-- Scripting starts here -->
+
+    <script>
+
+        // Gets value from input field with id of "input-to-reverse" and outputs to the field with an id of "output"
+        const input = () => {
+            // Input form and output field variables
+            const stringToReverse = document.querySelector("#input-to-reverse");
+            const output = document.querySelector("#output");
+            const error = document.querySelector(".input-error");
+
+            // Checks to make sure input length is valid.  If not returns an error message
+            if(checkInput() === true){
+                error.innerHTML = ''
+            }
+            
+            else {
+                error.innerHTML = checkInput()
+            }
+            
+            output.innerHTML = stringToReverse.value.trim()
+        }
+
+        checkInput = () => {
+            // Input form variable
+            const stringToCheck = document.querySelector("#input-to-reverse")
+
+            // Checks length of string against set parameters
+            if(stringToCheck.value.length > 100) {
+                console.log('long')
+                return `String to reverse is too long!  Please remove ${stringToCheck.value.length - 100} characters and try again!`
+            }
+            
+            else if (stringToCheck.value.length < 5) {
+                console.log('short')
+                return `String to reverse is too short!  Please add ${5 - stringToCheck.value.length} characters or more and try again!`
+            }
+
+            // If string length is valid return true
+            else return true
+        }
+
+        // Takes value from output field with id of "output" and reverses the string
+        const reverseString = () => {
+
+            // Variables for output field, "flip" and "reverse" in output title, reverse button, and error span
+            const output = document.querySelector("#output");
+            const flip = document.querySelector("#output-flip");
+            const reverse = document.querySelector("#output-reverse");
+            const error = document.querySelector(".input-error");
+
+            console.log(checkInput())
+            if (checkInput() === true) {
+            
+                // Adding class for animations
+                output.classList.add("flip");
+                flip.classList.add("flip");
+
+                // String reversal
+                setTimeout(() => 
+                    output.innerHTML = output.innerHTML.split("").reverse().join(""),
+                    1500);
+
+                // Removing classes once animation finishes so it can run again if reverse button is pressed again
+                // Then adding and removing classes for subsequent animations
+                setTimeout(() => {
+                    flip.classList.remove("flip");
+                    output.classList.remove("flip");
+                    reverse.classList.add("reverse");
+                    output.classList.add("reverse");
+                }, 1000);
+                    
+                setTimeout(() => {
+                    output.classList.remove("reverse");
+                    reverse.classList.remove("reverse");
+                }, 2000)
+            }
+
+            else {
+                error.innerHTML = checkInput();
+            }
+        }
+
+        const clearFields = () => {
+            const error = document.querySelector(".input-error");
+            const output = document.querySelector("#output");
+            let reverseForm = document.querySelector("#input-to-reverse");
+
+            error.innerHTML = "";
+            reverseForm.value = "";
+            output.innerHTML = "";
+        }
+
+    </script>
+</body>
+</html>
