@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="icon" href="./reverse.ico">
+    <link rel="icon" href="https://raw.githubusercontent.com/Magic-Mayo/Flip-It-and-Reverse-It/master/reverse.ico">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Liu+Jian+Mao+Cao&display=swap">
     <title>Reverse It!</title>
 
@@ -140,6 +140,7 @@
             font-style: italic;
             font-weight: 600;
             width: 40vw;
+            height: 5vh;
         }
 
         .output-section-title {
@@ -247,8 +248,7 @@
                 onkeyup="input()"
                 autofocus></textarea>
 
-                <!-- Set to non-breaking space so span will "take up space" and help with margins -->
-                <span class="input-error">&nbsp;</span>
+                <span class="input-error"></span>
                 
                 <div class="button-container">
                     <button type="submit" class="form-reverse-button">Reverse!</button>
@@ -311,7 +311,7 @@
             }
 
             // If string length is valid return true
-            else return error.innerHTML = "&nbsp;"
+            else return error.innerHTML = ""
         }
 
         // Takes value from output field with id of "output" and reverses the string
@@ -388,7 +388,7 @@
             }, 950);
 
             // Clears out error(if it exists)
-            error.innerHTML = "&nbsp;";
+            error.innerHTML = "";
 
             // Enables textarea input
             reverseForm.disabled = false;
@@ -413,11 +413,11 @@
             const input = document.querySelector("#input-to-reverse");
             const error = document.querySelector(".input-error");
 
-            if(error.innerHTML === "Reverse again or reset to enter new text!"){
-                return error.innerHTML = "&nbsp;"
+            if(error.innerHTML){
+                return error.innerHTML = ""
             }
 
-            else if (error.innerHTML === "&nbsp;" && input.value.length > 0 && input.value.length < 101){
+            else if (!error.innerHTML && input.value.length > 0 && input.value.length < 101){
                 return error.innerHTML = "Reverse again or reset to enter new text!"
             }
         }
