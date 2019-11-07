@@ -91,6 +91,10 @@
             overflow: hidden;
         }
 
+        textarea:focus {
+            outline: none;
+        }
+
         ::placeholder {
             font-size: 2rem;
             opacity: .75;
@@ -233,7 +237,7 @@
                 onkeyup="input()"
                 autofocus></textarea>
 
-                <span class="input-error"></span>
+                <span class="input-error">Pssst: Spaces count toward the total!</span>
                 
                 <div class="button-container">
                     <button type="submit" class="form-reverse-button">Reverse!</button>
@@ -388,7 +392,7 @@
             }, 950);
 
             // Clears out error(if it exists)
-            error.innerHTML = "";
+            error.innerHTML = "Pssst: Spaces count toward the total!";
 
             // Enables textarea input
             reverseForm.disabled = false;
@@ -417,7 +421,7 @@
 
             // Sets warning once reverse button is clicked to let user know they need to reset or reverse again before adding new text
             if(error.innerHTML){
-                return error.innerHTML = ""
+                return error.innerHTML = "Pssst: Spaces count toward the total!"
             }
 
             else if (!error.innerHTML && input.value.length > 0 && input.value.length < 101){
