@@ -306,13 +306,22 @@
             const error = document.querySelector(".input-error");
 
             // Checks length of string against set parameters and checks for spaces at beginning or end.  Returns error if one exists
-            if(stringToCheck.value.split("").shift() === " " || stringToCheck.value.split("").pop() === " " && stringToCheck.value.trim().length < 6){
+            if(stringToCheck.value.split("").shift() === " "){
 
                 stringToCheck.classList.add("error");
                 setTimeout(() => {
                     stringToCheck.classList.remove("error");
                 }, 1000);
-                return error.innerHTML = "The space(s) at the beginning and end don't count!";
+                return error.innerHTML = "The space(s) at the beginning don't count!";
+            }
+
+            else if(stringToCheck.value.split("").pop() === " " && stringToCheck.value.trim().length < 6){
+
+                stringToCheck.classList.add("error");
+                setTimeout(() => {
+                    stringToCheck.classList.remove("error");
+                }, 1000);
+                return error.innerHTML = "The space(s) at the end don't count toward character total!  Keep typing!";
             }
 
             else if(stringToCheck.value.length > 100) {
